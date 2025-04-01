@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
         });
 
-        Schema::create('units', function (Blueprint $table) {
+        Schema::create('unit', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // AP 801
             $table->integer('id_owner'); // dono da unidade

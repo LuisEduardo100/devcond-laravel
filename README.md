@@ -22,3 +22,9 @@
 -   php artisan make:migrate nome-da-migration // cria a migration
 -   php artisan migrate:fresh // dropa tabelas, prepara bd e roda as migrations novamente
 -   php artisan migrate:reset // reverte as migrations aplicadas sem recriar as tabelas
+
+## Model commands
+
+-   php artisan make:model Nome-do-modelo
+
+## Controller commands
