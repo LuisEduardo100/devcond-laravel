@@ -25,6 +25,8 @@
 
 ## Model commands
 
--   php artisan make:model Nome-do-modelo
+-   php artisan make:model NomeDoModelo
 
 ## Controller commands
+
+-   php artisan make:controller NomeController
