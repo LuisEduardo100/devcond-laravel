@@ -13,13 +13,6 @@ class User extends Authenticatable implements JWTSubject
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    protected $fillable = [
-        'name',
-        'email',
-        'cpf',
-        'password',
-    ];
-
     public $timestamps = false;
 
     /**
