@@ -35,16 +35,14 @@ class AuthController extends Controller
             $cpf = $req->input(('cpf'));
             $password = $req->input(('password'));
 
-            $hashed_password = password_hash($password, \PASSWORD_DEFAULT);
-
             $newUser = new User();
             $newUser->name = $name;
             $newUser->email = $email;
             $newUser->cpf = $cpf;
-            $newUser->password = $hashed_password;
+            $newUser->password = bcrypt($password);
             $newUser->save();
 
-            $token = auth::attempt([
+            $token = Auth::attempt([
                 'cpf' => $cpf,
                 'password' => $password
             ]);
@@ -56,7 +54,7 @@ class AuthController extends Controller
 
             $array['token'] = $token;
 
-            $user = auth::user();
+            $user = Auth::login($newUser);
             $array['user'] = $user;
 
             $properties = Unit::select(['id', 'name'])
@@ -84,7 +82,7 @@ class AuthController extends Controller
             $cpf = $req->input('cpf');
             $password = $req->input('password');
 
-            $token = auth::attempt([
+            $token = Auth::attempt([
                 'cpf' => $cpf,
                 'password' => $password
             ]);
@@ -95,7 +93,7 @@ class AuthController extends Controller
             }
 
             $array['token'] = $token;
-            $user = auth::user();
+            $user = Auth::user();
             $array['user'] = $user;
             $properties = Unit::select(['id', 'name'])
                 ->where('id_owner', $user['id'])
@@ -106,6 +104,29 @@ class AuthController extends Controller
             return $array;
         }
 
+        return $array;
+    }
+
+    public function validateToken()
+    {
+        $array = ['error' => ''];
+
+        $user = Auth::user();
+        $array['user'] = $user;
+
+        $properties = Unit::select(['id', 'name'])
+            ->where('id_owner', $user['id'])
+            ->get();
+
+        $array['user']['properties'] = $properties;
+
+        return $array;
+    }
+
+    public function logout()
+    {
+        $array = ['error' => ''];
+        Auth::logout();
         return $array;
     }
 }
